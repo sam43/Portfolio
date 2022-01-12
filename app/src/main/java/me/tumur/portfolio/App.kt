@@ -18,6 +18,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -41,7 +42,7 @@ class App : Application(), Configuration.Provider {
          * */
         startKoin {
             // AndroidLogger as Koin Logger - default Level.INFO
-            androidLogger()
+            androidLogger(Level.NONE)
             // Android context
             androidContext(this@App)
             // Load properties from assets/koin.properties file

@@ -100,7 +100,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val pref = preferenceManager.preferenceScreen
 
         /** Custom summary and intent data */
-        val version = context?.packageManager?.getPackageInfo(context?.packageName, 0)?.versionName
+        val version = context?.packageName?.let { context?.packageManager?.getPackageInfo(it, 0)?.versionName }
         val uri = Uri.parse("market://details?id=" + context?.packageName)
         // App version
         pref.findPreference<Preference>(appVersion)?.summary = version
@@ -126,7 +126,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         url?.let {
             /** Chrome custom tab  */
             val builder = CustomTabsIntent.Builder().apply {
-                this.setToolbarColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+                this.setToolbarColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
                 this.setShowTitle(true)
             }
             builder.build().launchUrl(context, (Uri.parse(url)))

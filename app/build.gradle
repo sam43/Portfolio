@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.crashlytics'
 apply from: "../utils.gradle"
 apply plugin: 'com.google.firebase.firebase-perf'
 
@@ -27,9 +27,9 @@ android {
             buildConfigField "boolean", "DEV_ENVIRONMENT", "true"
 
             zipAlignEnabled true
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            //minifyEnabled true
+            //shrinkResources true
+            //proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
             resValue "string", "google_maps_key", (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
             versionNameSuffix "-debug"
@@ -80,6 +80,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Kotlin
     implementation deps.kotlin.stdlib
+    //implementation deps.kotlin.ktx
     // Google
     implementation deps.google.material
     implementation deps.google.map
@@ -99,11 +100,13 @@ dependencies {
     // Fragment
     implementation deps.fragment.ktx
     // Android Architecture components
-    implementation deps.lifecycle.extension
+//    implementation deps.lifecycle.extension
     implementation deps.lifecycle.viewmodel
     implementation deps.lifecycle.saved_state
     implementation deps.lifecycle.livedata
     implementation deps.lifecycle.runtime
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.6'
+    implementation 'com.google.firebase:firebase-analytics:20.0.2'
     kapt deps.lifecycle.compiler
     implementation deps.room.runtime
     implementation deps.room.ktx
@@ -115,7 +118,6 @@ dependencies {
     // Firebase components
     implementation platform(deps.firebase.bom)
     implementation deps.firebase.core
-    implementation deps.firebase.crashlytics
     implementation deps.firebase.appindex
     implementation deps.firebase.monitoring
     // Dependency injection
